@@ -1,4 +1,3 @@
-// Author: Sean Davis
 #include <cstring>
 #include <iostream>
 #include <iomanip>
@@ -20,7 +19,7 @@ Registers::Registers()
 int* Registers::address(char *operand, int memory[], const Labels &labels)
 {
   static int value;
- 
+
   char *ptr;
   int regNum, index;
 
@@ -32,13 +31,13 @@ int* Registers::address(char *operand, int memory[], const Labels &labels)
     value = atoi(&operand[1]);
     return &value;
   } // if immediate mode
-  
+
   if(operand[0] == '.' || operand[0] == '_')  // label
   {
     value = labels.find(operand);
     return &value;
   }  // if operand is a label
-  
+
   if(strchr(operand, ',') && strchr(operand, ',') != strrchr(operand, ','))
     return scaledIndexMode(operand, memory);
 
@@ -60,7 +59,7 @@ int Registers::get(Registers::RegName regName) const
 {
   if(regName < eax || regName > eip)
     return 0;
-  
+
   return regs[regName];
 }  // get()
 
@@ -86,13 +85,13 @@ int Registers::operator+= (int change)
 
 ostream& operator<< (ostream &os, const Registers &registers)
 {
-  os << " eip: " << right << setw(3) << registers.regs[Registers::eip] 
-    << " eax: " << setw(3) << registers.regs[Registers::eax] 
-    << " ebp: " << setw(3) << registers.regs[Registers::ebp] 
-    << " esp: " << setw(3) << registers.regs[Registers::esp] 
-    << " edx: " << setw(3) << registers.regs[Registers::edx] 
+  os << " eip: " << right << setw(3) << registers.regs[Registers::eip]
+    << " eax: " << setw(3) << registers.regs[Registers::eax]
+    << " ebp: " << setw(3) << registers.regs[Registers::ebp]
+    << " esp: " << setw(3) << registers.regs[Registers::esp]
+    << " edx: " << setw(3) << registers.regs[Registers::edx]
     << " flags: " << setw(3) << registers.regs[Registers::flags] << endl;
-  
+
   return os;
 }  // operator<<()
 
@@ -101,24 +100,24 @@ int* Registers::scaledIndexMode(char *operand, int memory[]) const
 {
   int offset, regNum1, regNum2, size;
   char *ptr = operand, *ptr2;
-  
+
   while(*ptr != '(')
     ptr++;
-  
+
   *ptr = '\0';
   offset = atoi(operand);
   ptr2 = ++ptr;
-  
+
   while(*ptr != ',')
     ptr++;
-  
+
   *ptr = '\0';
   regNum1 = stringToRegNum(ptr2);
   ptr2 = ++ptr;
-  
+
   while(*ptr != ',')
     ptr++;
-  
+
   *ptr = '\0';
   regNum2 = stringToRegNum(ptr2);
   size = atoi(++ptr);
@@ -130,11 +129,11 @@ int Registers::stringToRegNum(const char *regString) const
 {
   char regNames[4][7] = {"eax", "ebp", "esp", "eip"};
   int regNum;
-  
+
   for(regNum = eax; regNum <= eip; regNum++)
     if(strstr(regString, regNames[regNum]))
       break;
-  
+
   return regNum;
 } // stringToRegNum()
 
@@ -152,7 +151,7 @@ void Registers::setFlags(int value)
     regs[flags] |= ZF;  // sets ZF flag
   else // value != 0
     regs[flags] &= ~ZF;  // clears ZF flag
-  
+
   if(value < 0)
     regs[flags] |= SF;  // sets SF flag
   else  // value >= 0

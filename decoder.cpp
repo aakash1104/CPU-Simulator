@@ -1,4 +1,3 @@
-// Author: Sean Davis
 #include <cstring>
 #include <iostream>
 #include <cstdlib>
@@ -39,16 +38,16 @@ void Decoder::execute(const Instruction *instruction,
 {
   const char *opcodes[] = { "addl", "andl", "leave", "movl", "pushl", "ret",
     "subl", "cmpl", "incl", "jg", "jle", "jmp", "leal", "call", "sall"};
-  enum OpcodeNum 
+  enum OpcodeNum
     {ADDL, ANDL, LEAVE, MOVL, PUSHL, RET, SUBL, CMPL, INCL, JG,
       JLE, JMP, LEAL, CALL, SALL
     };  // enum OpcodeNum
   int opcodeNum;
-  
-  for(opcodeNum = ADDL; 
+
+  for(opcodeNum = ADDL;
     strcmp(opcode, opcodes[opcodeNum]) != 0 || opcodeNum > SALL;
     ++opcodeNum);
-  
+
   switch (opcodeNum)
   {
     case ADDL: addl(registers); break;
@@ -68,7 +67,7 @@ void Decoder::execute(const Instruction *instruction,
     case SALL: sall(registers); break;
     default: cout << "Invalid opcode!\n";
   } // switch on oncodeNum
- 
+
 }  // execute()
 
 
@@ -122,20 +121,20 @@ void Decoder::movl()
 }  // movl()
 
 
-void Decoder::parse(const Instruction *instruction, Registers *registers, 
+void Decoder::parse(const Instruction *instruction, Registers *registers,
                     int memory[1001], const Labels &labels)
 {
   char *ptr, info[1000];
-  
+
   strcpy(info, instruction->getInfo());
   strcpy(opcode, strtok(info, " "));
   ptr = strtok(NULL, " ");
-  
+
   if(ptr)
   {
     operand1 = registers->address(ptr, memory, labels);
     ptr = strtok(NULL, " ");
-    
+
     if(ptr)
       operand2 = registers->address(ptr, memory, labels);
   } // if there is at least one operand

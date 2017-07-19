@@ -1,4 +1,3 @@
-// Author: Sean Davis
 #include <fstream>
 #include <iomanip>
 #include "registers.h"
@@ -24,7 +23,7 @@ int main(int argc, char* argv[])
   inf.seekg(0);
   inf >> labels;
   registers.set(Registers::eip, labels.find("main"));
-  
+
   while(registers.get(Registers::eip) != 0)
   {
     reader.fetch(&instruction, &registers);
@@ -32,9 +31,8 @@ int main(int argc, char* argv[])
     decoder.execute(&instruction, &registers, memory);
     cout << left << setw(20) << instruction.getInfo() << registers;
   } // while eip not zero
-  
- 
+
+
 
   return 0;
 }  // main()
-

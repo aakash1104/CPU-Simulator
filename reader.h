@@ -1,6 +1,5 @@
 #ifndef READER_H
 #define	READER_H
-// Author: Sean Davis
 
 #include <iostream>
 #include "instruction.h"
@@ -16,5 +15,4 @@ public:
 }; // Reader;
 
 
-#endif	// READER_H 
-
+#endif	// READER_H

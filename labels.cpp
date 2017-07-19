@@ -1,4 +1,3 @@
-// Author: Sean Davis
 
 #include <cstring>
 #include <cstdlib> // for exit()
@@ -14,10 +13,10 @@ int Labels::find(const char* label) const
   for(int i = 0; i < count; i++)
     if(strcmp(addresses[i].getInfo(), label) == 0)
       return addresses[i].getAddress();
-  
+
   cerr << label << " not found!\n";
   exit(1);  // should never get here!!
-  
+
 } // find()
 
 
@@ -26,14 +25,14 @@ istream& operator>> (istream &is, Labels &labels)
   char line[256], *ptr;
   int address = 100;
   labels.count = 0;
-  
+
   while(is.getline(line, 256))
   {
     for(ptr = strchr(line, '\t'); ptr; ptr = strchr(line, '\t'))
       *ptr = ' ';  // replace all tabs with space characters
-    
+
     for(ptr = line; *ptr == ' '; ptr++);  // get past leading spaces
-    
+
     if(*ptr == '.' || *ptr == '_')
     {
       if((ptr[1] == 'L' || *ptr == '_') && strchr(ptr, ':'))
@@ -52,8 +51,6 @@ istream& operator>> (istream &is, Labels &labels)
       else  // not a directive, nor function label, nor main
         address += 4;
   }  // while more in file
-  
+
   return is;
 }  // operator>>
-
-

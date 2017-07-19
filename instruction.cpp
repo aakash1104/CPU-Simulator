@@ -1,4 +1,3 @@
-// Author: Sean Davis
 #include "instruction.h"
 #include <iostream>
 #include <cstring>
@@ -15,7 +14,7 @@ Instruction::~Instruction()
   if(info)
     delete [] info;
 }  // ~Instruction
-  
+
 
 int Instruction::getAddress() const
 {
@@ -33,7 +32,7 @@ void Instruction::setAddress(int addr)
 {
   address = addr;
 } // setAddress()
-  
+
 
 void Instruction::setInfo(const char* information)
 {
