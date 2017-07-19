@@ -1,0 +1,2 @@
+# CPU Simulator
+Implemented a CPU Simulator using C++ that relied on the Intel x86 Architecture for its design. Simulated many parts of the CPU such as Memory Cache, Decoder, Control Unit, ALU and Floating Point Unit. Read in Assembly Language files with multiple operations and simulated the CPU Registers after every operation. Also implemented a memory system that could hold both Instructions and data.
